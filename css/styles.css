@@ -1,0 +1,372 @@
+/* ── Reset & box model ────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Design tokens ────────────────────────────────────────────────────── */
+:root {
+  --bg:        #12121e;
+  --bg-card:   #1c1c30;
+  --bg-card2:  #22223a;
+  --accent:    #2a2a4a;
+  --primary:   #e94560;
+  --primary-d: #c73350;
+  --text:      #e8e8f0;
+  --text-muted:#7a7a9a;
+  --success:   #4caf80;
+  --radius-sm: 10px;
+  --radius:    16px;
+  --radius-lg: 24px;
+  --shadow:    0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  overflow-x: hidden;
+  /* Disable tap highlight on mobile */
+  -webkit-tap-highlight-color: transparent;
+  /* Prevent text selection on button mashing */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ── App shell ────────────────────────────────────────────────────────── */
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+.app-header {
+  text-align: center;
+  padding: 1.5rem 0 0.5rem;
+}
+
+.app-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 0.25rem;
+}
+
+/* ── Metrics grid ─────────────────────────────────────────────────────── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.625rem;
+}
+
+.metric-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1rem 0.5rem 0.75rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--primary);
+  min-height: 2rem;
+}
+
+.metric-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.4rem;
+}
+
+/* ── Beat indicator ───────────────────────────────────────────────────── */
+.beat-indicator-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.beat-indicator {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 3px solid rgba(233, 69, 96, 0.25);
+  transition: background 60ms linear, transform 60ms ease, box-shadow 60ms linear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.beat-indicator.beat {
+  background: var(--primary);
+  transform: scale(1.12);
+  box-shadow: 0 0 36px 8px rgba(233, 69, 96, 0.55);
+}
+
+/* ── Phase label ──────────────────────────────────────────────────────── */
+.phase-label {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  min-height: 1.4em;
+}
+
+/* ── Primary action button ────────────────────────────────────────────── */
+.controls {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.75rem;
+  transition: transform 120ms ease, background 120ms ease;
+  color: var(--text);
+}
+
+.btn:active {
+  transform: scale(0.94);
+}
+
+.btn-primary {
+  background: var(--primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-d);
+}
+
+.btn-secondary {
+  background: var(--accent);
+}
+
+.btn-large {
+  font-size: 1.35rem;
+  padding: 1rem 3rem;
+  border-radius: var(--radius-lg);
+  min-width: 160px;
+  box-shadow: var(--shadow);
+}
+
+/* start = primary; active (stop) = accent */
+.btn-large[data-state='active'] {
+  background: var(--accent);
+  border: 2px solid var(--primary);
+}
+
+/* ── Card sections (mode / volume) ───────────────────────────────────── */
+.section-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1.1rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.section-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+}
+
+/* ── Mode buttons ─────────────────────────────────────────────────────── */
+.mode-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.mode-btn {
+  background: var(--bg-card2);
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.5rem;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  transition: border-color 150ms ease, background 150ms ease, transform 100ms ease;
+}
+
+.mode-btn:active {
+  transform: scale(0.96);
+}
+
+.mode-btn.active {
+  border-color: var(--primary);
+  background: rgba(233, 69, 96, 0.12);
+}
+
+.mode-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.mode-name {
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.mode-desc {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+/* ── Sliders ──────────────────────────────────────────────────────────── */
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.slider-row label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 55px;
+}
+
+input[type='range'] {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--accent);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  border: none;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: none;
+  cursor: pointer;
+}
+
+/* ── Guide target BPM ─────────────────────────────────────────────────── */
+.guide-target {
+  margin-top: 0.25rem;
+}
+
+.guide-target .slider-row label::after {
+  content: attr(data-value);
+}
+
+/* ── Permission / no-sensor notices ──────────────────────────────────── */
+.notice-card {
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.notice-card.warning {
+  background: rgba(233, 69, 96, 0.10);
+  border: 1px solid rgba(233, 69, 96, 0.30);
+}
+
+.notice-card p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ── No-sensor manual BPM fallback ───────────────────────────────────── */
+.manual-bpm-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.manual-bpm-row input[type='number'] {
+  background: var(--bg-card2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 1.1rem;
+  padding: 0.5rem 0.75rem;
+  width: 90px;
+  text-align: center;
+  outline: none;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* ── Responsive tweaks ────────────────────────────────────────────────── */
+@media (max-height: 600px) {
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .beat-indicator {
+    width: 80px;
+    height: 80px;
+  }
+
+  .app-header {
+    padding: 0.75rem 0 0.25rem;
+  }
+
+  .app {
+    gap: 0.75rem;
+  }
+}

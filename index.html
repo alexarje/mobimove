@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+
+  <!-- Progressive Web App -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#12121e" />
+
+  <title>MobiMove</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── Header ─────────────────────────────────────────────────────── -->
+    <header class="app-header">
+      <h1>MobiMove</h1>
+      <p class="subtitle">Walking rhythm entrainment</p>
+    </header>
+
+    <!-- ── Metrics ────────────────────────────────────────────────────── -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-value" id="step-count">0</div>
+        <div class="metric-label">Steps</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="walk-cadence">—</div>
+        <div class="metric-label">Walk BPM</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="music-bpm">—</div>
+        <div class="metric-label">Music BPM</div>
+      </div>
+    </div>
+
+    <!-- ── Beat indicator ─────────────────────────────────────────────── -->
+    <div class="beat-indicator-wrap">
+      <div class="beat-indicator" id="beat-indicator" role="status" aria-label="Beat pulse"></div>
+    </div>
+
+    <!-- ── Phase label ────────────────────────────────────────────────── -->
+    <p class="phase-label" id="phase-label">Ready to walk</p>
+
+    <!-- ── Start / Stop ───────────────────────────────────────────────── -->
+    <div class="controls">
+      <button class="btn btn-primary btn-large"
+              id="start-stop-btn"
+              data-state="idle"
+              aria-label="Start session">Start</button>
+    </div>
+
+    <!-- ── Mode selector (shown after sync) ───────────────────────────── -->
+    <div class="section-card" id="mode-section" style="display:none">
+      <span class="section-title">Entrainment mode</span>
+
+      <div class="mode-buttons">
+        <button class="mode-btn active" id="mode-mirror" aria-pressed="true">
+          <span class="mode-icon" aria-hidden="true">🔄</span>
+          <span class="mode-name">Mirror</span>
+          <span class="mode-desc">Match your pace</span>
+        </button>
+        <button class="mode-btn" id="mode-guide" aria-pressed="false">
+          <span class="mode-icon" aria-hidden="true">🎯</span>
+          <span class="mode-name">Guide</span>
+          <span class="mode-desc">Nudge your pace</span>
+        </button>
+      </div>
+
+      <div class="guide-target" id="guide-target" style="display:none">
+        <div class="slider-row">
+          <label for="target-bpm">Target: <strong id="target-bpm-display">110</strong> BPM</label>
+          <input type="range" id="target-bpm" min="80" max="140" value="110" step="1"
+                 aria-label="Target BPM" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Volume (shown after sync) ──────────────────────────────────── -->
+    <div class="section-card" id="volume-section" style="display:none">
+      <div class="slider-row">
+        <label for="volume">Volume</label>
+        <input type="range" id="volume" min="0" max="1" value="0.8" step="0.05"
+               aria-label="Master volume" />
+      </div>
+    </div>
+
+    <!-- ── iOS permission notice ──────────────────────────────────────── -->
+    <div class="notice-card warning" id="permission-notice" style="display:none">
+      <p>Tap below to allow motion-sensor access.<br />(Required on iOS 13+)</p>
+      <button class="btn btn-primary" id="permission-btn">Allow Sensors</button>
+    </div>
+
+    <!-- ── No-sensor fallback ─────────────────────────────────────────── -->
+    <div class="notice-card warning" id="no-sensor-section" style="display:none">
+      <p>Motion sensors not detected.<br />
+         Enter a BPM manually to use the beat engine:</p>
+      <div class="manual-bpm-row">
+        <input type="number" id="manual-bpm-input" min="40" max="220" value="100"
+               aria-label="Manual BPM" />
+        <button class="btn btn-primary" id="manual-bpm">Play Beat</button>
+      </div>
+    </div>
+
+  </div><!-- /.app -->
+
+  <script src="js/stepDetector.js"></script>
+  <script src="js/audioEngine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

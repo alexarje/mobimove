@@ -125,7 +125,8 @@
   }
 
   function checkSensorAvailability() {
-    // Give the browser a moment then check if we received any events.
+    // Give the browser a moment, then show the manual-BPM fallback if no
+    // motion events arrived (e.g. desktop browsers or restricted contexts).
     const testHandler = (e) => {
       if (e.accelerationIncludingGravity || e.acceleration) {
         sensorAvailable = true;
@@ -135,7 +136,7 @@
     window.addEventListener('devicemotion', testHandler);
 
     setTimeout(() => {
-      if (!sensorAvailable && typeof DeviceMotionEvent === 'undefined') {
+      if (!sensorAvailable) {
         elNoSensor.style.display = 'block';
       }
     }, 2000);
@@ -208,7 +209,9 @@
       const nextBeat = audioEngine._nextBeatTime;
       const spb = audioEngine._secondsPerBeat;
 
-      // Find the nearest beat (past or future).
+      // Find the nearest beat (past or future) by normalising the step
+      // time offset into the [0, spb) range, then checking which side of
+      // spb/2 it falls on.
       const offset = ((stepAudioTime - nextBeat) % spb + spb) % spb;
       const nearestOffset = offset < spb / 2 ? offset : offset - spb;
 
